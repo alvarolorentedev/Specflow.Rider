@@ -30,6 +30,10 @@
 
   <actions>
     <!-- Add your actions here -->
+    <action id="Specflow.Rider.GenerateCode" class="SpecflowGenerateCode" text="Specflow Generate Code"
+            description="Auto generate specflow file">
+      <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="AssociateWithFileType"/>
+    </action>
   </actions>
 
 </idea-plugin>
