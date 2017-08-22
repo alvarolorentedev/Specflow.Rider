@@ -22,3 +22,10 @@
 hs_err_pid*
 
 out
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+/.idea/dictionaries
+.DS_Store
+/build
