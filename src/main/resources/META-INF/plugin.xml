@@ -30,6 +30,10 @@
     </project-components>
 
     <actions>
+        <action id="Specflow.Rider.GenerateCode" class="kanekotic.specflow.rider.SpecflowGenerateCode"
+                text="Specflow Generate Code" description="Auto generate specflow file">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="AssociateWithFileType"/>
+        </action>
     </actions>
 
 </idea-plugin>
