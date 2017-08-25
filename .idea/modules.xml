@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Specflow.Rider/Specflow.Rider.iml" filepath="$PROJECT_DIR$/Specflow.Rider/Specflow.Rider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Specflow.Rider.iml" filepath="$PROJECT_DIR$/.idea/modules/Specflow.Rider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Specflow.Rider_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Specflow.Rider_main.iml" group="Specflow.Rider" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Specflow.Rider_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Specflow.Rider_test.iml" group="Specflow.Rider" />
     </modules>
   </component>
 </project>

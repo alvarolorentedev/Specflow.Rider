@@ -1,7 +1,14 @@
 package kanekotic.specflow.rider;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import static org.mockito.Mockito.*;
 
-class SpecflowGenerateCodeTest {
+public class SpecflowGenerateCodeTest {
+
+    @Test
+    public void actionPerformedTest(){
+        SpecflowGenerateCode action = new SpecflowGenerateCode();
+        //action.actionPerformed();
+    }
 
 }
