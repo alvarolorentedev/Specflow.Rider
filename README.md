@@ -1,5 +1,5 @@
 # ![logomakr_8dchdu](https://user-images.githubusercontent.com/3071208/29508416-bf674688-8654-11e7-8c90-5472529cd9aa.png)
-
+[![Build Status](https://travis-ci.org/kanekotic/Specflow.Rider.svg?branch=master)](https://travis-ci.org/kanekotic/Specflow.Rider)
 ## Intent
 
 Integration of Specflow autogeneration for Rider
