@@ -6,7 +6,12 @@ Integration of Specflow autogeneration for Rider
 
 ## Setup
 
-TBD
+clone this repo, and make sure you have intellij installed the community version should be enough. you can use the next Gradle commands from command line:
+
+```
+gradle compile  # generate the code
+gradle check    # gnerate the code and test
+```
 
 ### Logo
 
