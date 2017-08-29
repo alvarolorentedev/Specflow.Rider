@@ -5,23 +5,45 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.junit.Test;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import java.io.IOException;
+
+import static org.mockito.Mockito.*;
 
 public class SpecflowGenerateCodeTest {
 
     @Test
-    public void actionAnalizesFile(){
-        SpecflowGenerateCode genrator = new SpecflowGenerateCode();
+    public void actionAnalizesFile() throws IOException {
+
         AnActionEvent action = mock(AnActionEvent.class);
+        ISpecflowLexer lexer = mock(ISpecflowLexer.class);
         VirtualFile file = mock(VirtualFile.class);
+        byte[] fileContent = new byte[5];
 
         when(action.getData(PlatformDataKeys.VIRTUAL_FILE)).thenReturn(file);
+        when(file.contentsToByteArray()).thenReturn(fileContent);
 
+        SpecflowGenerateCode genrator = new SpecflowGenerateCode(lexer);
         genrator.actionPerformed(action);
 
-        verify(action).getData(PlatformDataKeys.VIRTUAL_FILE);
+        verify(lexer).analize(fileContent);
+    }
+
+    @Test
+    public void actionFileReadFailDoesNotBubleExceptio() throws IOException {
+
+        AnActionEvent action = mock(AnActionEvent.class);
+        ISpecflowLexer lexer = mock(ISpecflowLexer.class);
+        VirtualFile file = mock(VirtualFile.class);
+        byte[] fileContent = new byte[5];
+
+        when(action.getData(PlatformDataKeys.VIRTUAL_FILE)).thenReturn(file);
+        when(file.contentsToByteArray()).thenThrow(new IOException());
+
+        SpecflowGenerateCode genrator = new SpecflowGenerateCode(lexer);
+        genrator.actionPerformed(action);
+
+        verify(lexer, never()).analize(fileContent);
     }
 
 }
+
