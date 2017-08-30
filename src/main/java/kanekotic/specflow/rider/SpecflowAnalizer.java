@@ -1,6 +1,6 @@
 package kanekotic.specflow.rider;
 
-public class SpecflowLexer implements ISpecflowLexer {
+public class SpecflowAnalizer implements ISpecflowAnalizer {
 
     @Override
     public String analize(byte[] file) {

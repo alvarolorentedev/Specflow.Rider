@@ -15,7 +15,7 @@ public class SpecflowGenerateCodeTest {
     public void actionAnalizesFile() throws IOException {
 
         AnActionEvent action = mock(AnActionEvent.class);
-        ISpecflowLexer lexer = mock(ISpecflowLexer.class);
+        ISpecflowAnalizer lexer = mock(ISpecflowAnalizer.class);
         VirtualFile file = mock(VirtualFile.class);
         byte[] fileContent = new byte[5];
 
@@ -32,7 +32,7 @@ public class SpecflowGenerateCodeTest {
     public void actionFileReadFailDoesNotBubleExceptio() throws IOException {
 
         AnActionEvent action = mock(AnActionEvent.class);
-        ISpecflowLexer lexer = mock(ISpecflowLexer.class);
+        ISpecflowAnalizer lexer = mock(ISpecflowAnalizer.class);
         VirtualFile file = mock(VirtualFile.class);
         byte[] fileContent = new byte[5];
 

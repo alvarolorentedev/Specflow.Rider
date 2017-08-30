@@ -1,7 +1,6 @@
 package kanekotic.specflow.rider;
 
-public interface ISpecflowLexer {
-
+public interface ISpecflowAnalizer {
     String analize(byte[] fileContent);
 }
 
