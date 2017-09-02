@@ -4,4 +4,8 @@ grammar Specflow;
     package kanekotic.specflow.rider;
 }
 
-program: EOF;
+file returns [List<String> values]
+    @init { $values = new ArrayList<String>(); }
+    : NEWLINE;
+
+NEWLINE :   '\r'? '\n';
