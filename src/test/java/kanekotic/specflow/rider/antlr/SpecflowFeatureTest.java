@@ -1,4 +1,4 @@
-package kanekotic.specflow.rider;
+package kanekotic.specflow.rider.antlr;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -10,12 +10,12 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-public class SpecflowGrammarTest {
+public class SpecflowFeatureTest {
 
     @Test
     public void analize() throws Exception {
         SpecflowFeatureParser parser = createParser("Feature: ");;
-        List<String> result = parser.file().values;
+        List<String> result = parser.feature().values;
         assert result.isEmpty();
     }
 

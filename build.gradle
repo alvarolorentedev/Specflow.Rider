@@ -29,5 +29,5 @@ dependencies {
 }
 
 generateGrammarSource {
-    arguments += ['-package','kanekotic.specflow.rider', '-lib','src/main/antlr/kanekotic/specflow/rider']
+    arguments += ['-package','kanekotic.specflow.rider.antlr', '-lib','src/main/antlr/kanekotic/specflow/rider/antlr']
 }

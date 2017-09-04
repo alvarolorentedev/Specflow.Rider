@@ -1,4 +1,0 @@
-grammar SpecflowScenario;
-
-scenario
-    : 'Scenario: ';
