@@ -14,17 +14,17 @@ public class SpecflowGrammarTest {
 
     @Test
     public void analize() throws Exception {
-        SpecflowParser parser = createParser("\n");;
+        SpecflowFeatureParser parser = createParser("Feature: ");;
         List<String> result = parser.file().values;
         assert result.isEmpty();
     }
 
-    private SpecflowParser createParser(String snippet) throws IOException {
+    private SpecflowFeatureParser createParser(String snippet) throws IOException {
         InputStream stream = new ByteArrayInputStream(snippet.getBytes(StandardCharsets.UTF_8));
         ANTLRInputStream antlrInputStream = new ANTLRInputStream(stream);
-        SpecflowLexer lexer = new SpecflowLexer(antlrInputStream);
+        SpecflowFeatureLexer lexer = new SpecflowFeatureLexer(antlrInputStream);
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        SpecflowParser parser = new SpecflowParser(tokenStream);
+        SpecflowFeatureParser parser = new SpecflowFeatureParser(tokenStream);
         return parser;
 
     }

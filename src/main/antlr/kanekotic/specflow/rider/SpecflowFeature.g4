@@ -1,4 +1,6 @@
-grammar Specflow;
+grammar SpecflowFeature;
+
+import SpecflowScenario;
 
 @header {
     package kanekotic.specflow.rider;
@@ -6,6 +8,5 @@ grammar Specflow;
 
 file returns [List<String> values]
     @init { $values = new ArrayList<String>(); }
-    : NEWLINE;
+    : 'Feature: ' EOF;
 
-NEWLINE :   '\r'? '\n';
