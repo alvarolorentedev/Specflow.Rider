@@ -29,6 +29,5 @@ dependencies {
 }
 
 generateGrammarSource {
-    outputDirectory file("${project.buildDir}/generated-src/antlr/main/kanekotic/specflow/rider")
-    arguments += ['-package','kanekotic.specflow.rider']
+    arguments += ['-package','kanekotic.specflow.rider', '-lib','src/main/antlr/kanekotic/specflow/rider']
 }
