@@ -1,9 +1,13 @@
 package kanekotic.specflow.rider;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SpecflowAnalizer implements ISpecflowAnalizer {
 
     @Override
-    public String analize(byte[] file) {
-        throw new java.lang.UnsupportedOperationException("Not supported yet.");
+    public List<String> analize(byte[] file) {
+        return new ArrayList<String>();
     }
+
 }
