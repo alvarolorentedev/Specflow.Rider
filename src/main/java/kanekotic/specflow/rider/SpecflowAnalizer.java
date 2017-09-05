@@ -1,5 +1,7 @@
 package kanekotic.specflow.rider;
 
+import gherkin.parser.Parser;
+
 import java.util.ArrayList;
 import java.util.List;
 
