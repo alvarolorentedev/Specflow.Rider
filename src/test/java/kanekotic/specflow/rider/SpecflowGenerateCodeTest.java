@@ -17,10 +17,10 @@ public class SpecflowGenerateCodeTest {
         AnActionEvent action = mock(AnActionEvent.class);
         ISpecflowAnalizer lexer = mock(ISpecflowAnalizer.class);
         VirtualFile file = mock(VirtualFile.class);
-        byte[] fileContent = new byte[5];
+        String fileContent = "";
 
         when(action.getData(PlatformDataKeys.VIRTUAL_FILE)).thenReturn(file);
-        when(file.contentsToByteArray()).thenReturn(fileContent);
+        when(file.contentsToByteArray()).thenReturn(fileContent.getBytes());
 
         SpecflowGenerateCode genrator = new SpecflowGenerateCode(lexer);
         genrator.actionPerformed(action);
@@ -34,7 +34,7 @@ public class SpecflowGenerateCodeTest {
         AnActionEvent action = mock(AnActionEvent.class);
         ISpecflowAnalizer lexer = mock(ISpecflowAnalizer.class);
         VirtualFile file = mock(VirtualFile.class);
-        byte[] fileContent = new byte[5];
+        String fileContent = "";
 
         when(action.getData(PlatformDataKeys.VIRTUAL_FILE)).thenReturn(file);
         when(file.contentsToByteArray()).thenThrow(new IOException());

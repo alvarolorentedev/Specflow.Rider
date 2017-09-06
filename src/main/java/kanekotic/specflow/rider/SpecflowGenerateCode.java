@@ -4,6 +4,10 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.vfs.VirtualFile;
+import gherkin.AstBuilder;
+import gherkin.Parser;
+import gherkin.ast.GherkinDocument;
+import gherkin.pickles.Compiler;
 
 import java.io.IOException;
 
@@ -12,7 +16,7 @@ public class SpecflowGenerateCode extends AnAction {
     private ISpecflowAnalizer lexer;
 
     public SpecflowGenerateCode(){
-        this(new SpecflowAnalizer());
+        this(new SpecflowAnalizer(new Compiler(), new Parser<GherkinDocument>(new AstBuilder())));
     }
 
     public SpecflowGenerateCode(ISpecflowAnalizer lexer){
@@ -25,7 +29,7 @@ public class SpecflowGenerateCode extends AnAction {
         VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
 
         try {
-            lexer.analize(file.contentsToByteArray());
+            lexer.analize(new String(file.contentsToByteArray()));
         } catch (IOException ioExeption) {
 
         }
