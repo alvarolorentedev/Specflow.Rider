@@ -1,8 +1,6 @@
 package kanekotic.specflow.rider;
 
-import java.util.List;
-
 public interface ISpecflowAnalizer {
-    List<String> analize(String file);
+    SpecflowFileContents analize(String file);
 }
 
