@@ -38,7 +38,7 @@ public class SpecflowTranslatorCSharp implements ISpecflowTranslator {
     @Override
     public SpecflowFileContents translate(Feature content, SpecflowFileContents scenarionContent, ITestFrameworkConstants constants) {
         String resultContent = String.format(BodyContent,
-                constants.getExpectedClassAttributes(content.getName()git ),
+                constants.getExpectedClassAttributes(content.getName()),
                 content.getName().replaceAll("[^A-Za-z0-9]", ""),
                 constants.getTestFixtureSetupHeader(),
                 content.getName(),
