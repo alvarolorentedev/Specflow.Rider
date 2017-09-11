@@ -12,11 +12,11 @@ public class SpecflowAnalizerTest {
     @Test
     public void analizeCallsCorrectProcess() throws Exception {
         Parser<GherkinDocument> parser = (Parser<GherkinDocument>) mock(Parser.class);
-        SpecflowAnalizer analizer = new SpecflowAnalizer(parser);
+        SpecflowAnalyzer analizer = new SpecflowAnalyzer(parser);
         String document = "my string";
         GherkinDocument gherkinDocument = mock(GherkinDocument.class);
         when(parser.parse(document)).thenReturn(gherkinDocument);
-        SpecflowFileContents contents = analizer.analize(document);
+        SpecflowFileContents contents = analizer.analyze(document);
 
         verify(parser).parse(document);
         assertEquals("", contents.feature);

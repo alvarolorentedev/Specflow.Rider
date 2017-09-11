@@ -15,7 +15,7 @@ public class SpecflowGenerateCodeTest {
     public void actionAnalyzesFile() throws IOException {
 
         AnActionEvent action = mock(AnActionEvent.class);
-        ISpecflowAnalizer lexer = mock(ISpecflowAnalizer.class);
+        ISpecflowAnalyzer lexer = mock(ISpecflowAnalyzer.class);
         VirtualFile file = mock(VirtualFile.class);
         String fileContent = "";
 
@@ -25,14 +25,14 @@ public class SpecflowGenerateCodeTest {
         SpecflowGenerateCode genrator = new SpecflowGenerateCode(lexer);
         genrator.actionPerformed(action);
 
-        verify(lexer).analize(fileContent);
+        verify(lexer).analyze(fileContent);
     }
 
     @Test
     public void actionFileReadFailDoesNotBubbleExcepted() throws IOException {
 
         AnActionEvent action = mock(AnActionEvent.class);
-        ISpecflowAnalizer lexer = mock(ISpecflowAnalizer.class);
+        ISpecflowAnalyzer lexer = mock(ISpecflowAnalyzer.class);
         VirtualFile file = mock(VirtualFile.class);
         String fileContent = "";
 
@@ -42,7 +42,7 @@ public class SpecflowGenerateCodeTest {
         SpecflowGenerateCode generator = new SpecflowGenerateCode(lexer);
         generator.actionPerformed(action);
 
-        verify(lexer, never()).analize(fileContent);
+        verify(lexer, never()).analyze(fileContent);
     }
 
 }

@@ -12,13 +12,13 @@ import java.io.IOException;
 
 public class SpecflowGenerateCode extends AnAction {
 
-    private ISpecflowAnalizer lexer;
+    private ISpecflowAnalyzer lexer;
 
     public SpecflowGenerateCode(){
-        this(new SpecflowAnalizer(new Parser<GherkinDocument>(new AstBuilder())));
+        this(new SpecflowAnalyzer(new Parser<GherkinDocument>(new AstBuilder())));
     }
 
-    public SpecflowGenerateCode(ISpecflowAnalizer lexer){
+    public SpecflowGenerateCode(ISpecflowAnalyzer lexer){
         super();
         this.lexer = lexer;
     }
@@ -28,7 +28,7 @@ public class SpecflowGenerateCode extends AnAction {
         VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
 
         try {
-            lexer.analize(new String(file.contentsToByteArray()));
+            lexer.analyze(new String(file.contentsToByteArray()));
         } catch (IOException ioExeption) {
 
         }

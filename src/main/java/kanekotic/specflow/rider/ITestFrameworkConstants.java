@@ -1,7 +1,7 @@
 package kanekotic.specflow.rider;
 
 public interface ITestFrameworkConstants {
-    String getExpectedClassAtributes();
+    String getExpectedClassAttributes(String name);
 
     String getTestFixtureSetupHeader();
 

@@ -2,7 +2,7 @@ package kanekotic.specflow.rider;
 
 public class NunitTestFrameworkConstants implements ITestFrameworkConstants {
     @Override
-    public String getExpectedClassAtributes() { return ExpectedClassAtributes; }
+    public String getExpectedClassAttributes(String name) { return  String.format(ExpectedClassAttributes,name); }
 
     @Override
     public String getTestFixtureSetupHeader() {
@@ -16,18 +16,18 @@ public class NunitTestFrameworkConstants implements ITestFrameworkConstants {
 
     @Override
     public String getTestScenarioSetupHeader() {
-        return TestScenrioSetupHeader;
+        return TestScenarioSetupHeader;
     }
 
     @Override
     public String getTestScenarioTearDownHeader() {
-        return TestScenrioTearDownHeader;
+        return TestScenarioTearDownHeader;
     }
 
-    public static final String  ExpectedClassAtributes = String.join(
+    public static final String ExpectedClassAttributes = String.join(
             System.getProperty("line.separator"),
             "[NUnit.Framework.TestFixtureAttribute()]",
-            "[NUnit.Framework.DescriptionAttribute(\"{0}\")]"//name
+            "[NUnit.Framework.DescriptionAttribute(\"%1$s\")]"
     );
     public static final String  TestFixtureSetupHeader = String.join(
             System.getProperty("line.separator"),
@@ -39,8 +39,8 @@ public class NunitTestFrameworkConstants implements ITestFrameworkConstants {
             "[NUnit.Framework.TestFixtureTearDownAttribute()]",
             "public virtual void FeatureTearDown()"
     );
-    public static final String  TestScenrioSetupHeader = "public virtual void ScenarioSetup(TechTalk.SpecFlow.ScenarioInfo scenarioInfo)";
-    public static final String  TestScenrioTearDownHeader = String.join(
+    public static final String TestScenarioSetupHeader = "public virtual void ScenarioSetup(TechTalk.SpecFlow.ScenarioInfo scenarioInfo)";
+    public static final String TestScenarioTearDownHeader = String.join(
             System.getProperty("line.separator"),
             "[NUnit.Framework.TearDownAttribute()]",
             "public virtual void ScenarioTearDown()"

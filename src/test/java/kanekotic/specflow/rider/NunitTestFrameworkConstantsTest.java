@@ -2,13 +2,15 @@ package kanekotic.specflow.rider;
 
 import org.junit.Test;
 
+import java.util.UUID;
+
 import static org.junit.Assert.assertEquals;
 
 public class NunitTestFrameworkConstantsTest {
-    public static final String  nunitExpectedClassAtributes = String.join(
+    public static final String nunitExpectedClassAttributes = String.join(
             System.getProperty("line.separator"),
             "[NUnit.Framework.TestFixtureAttribute()]",
-            "[NUnit.Framework.DescriptionAttribute(\"{0}\")]"//name
+            "[NUnit.Framework.DescriptionAttribute(\"%1$s\")]"
     );
     public static final String  nunitTestFixtureSetupHeader = String.join(
             System.getProperty("line.separator"),
@@ -20,17 +22,22 @@ public class NunitTestFrameworkConstantsTest {
             "[NUnit.Framework.TestFixtureTearDownAttribute()]",
             "public virtual void FeatureTearDown()"
     );
-    public static final String  nunitTestScenrioSetupHeader = "public virtual void ScenarioSetup(TechTalk.SpecFlow.ScenarioInfo scenarioInfo)";
-    public static final String  nunitTestScenrioTearDownHeader = String.join(
+    public static final String nunitTestScenarioSetupHeader = "public virtual void ScenarioSetup(TechTalk.SpecFlow.ScenarioInfo scenarioInfo)";
+    public static final String nunitTestScenarioTearDownHeader = String.join(
             System.getProperty("line.separator"),
             "[NUnit.Framework.TearDownAttribute()]",
             "public virtual void ScenarioTearDown()"
     );
 
+    private String getRandomString(){
+        return UUID.randomUUID().toString();
+    }
+
     @Test
     public void getExpectedClassAtributesTest() {
         NunitTestFrameworkConstants constants = new NunitTestFrameworkConstants();
-        assertEquals(nunitExpectedClassAtributes,constants.getExpectedClassAtributes());
+        String id = getRandomString();
+        assertEquals(String.format(nunitExpectedClassAttributes, id),constants.getExpectedClassAttributes(id));
 
     }
 
@@ -50,13 +57,13 @@ public class NunitTestFrameworkConstantsTest {
     @Test
     public void getTestScenrioSetupHeaderTest() {
         NunitTestFrameworkConstants constants = new NunitTestFrameworkConstants();
-        assertEquals(nunitTestScenrioSetupHeader,constants.getTestScenarioSetupHeader());
+        assertEquals(nunitTestScenarioSetupHeader,constants.getTestScenarioSetupHeader());
     }
 
     @Test
     public void getTestScenrioTearDownHeaderTest() {
         NunitTestFrameworkConstants constants = new NunitTestFrameworkConstants();
-        assertEquals(nunitTestScenrioTearDownHeader,constants.getTestScenarioTearDownHeader());
+        assertEquals(nunitTestScenarioTearDownHeader,constants.getTestScenarioTearDownHeader());
     }
 
 }
