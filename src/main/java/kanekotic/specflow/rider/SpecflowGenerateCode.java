@@ -7,7 +7,6 @@ import com.intellij.openapi.vfs.VirtualFile;
 import gherkin.AstBuilder;
 import gherkin.Parser;
 import gherkin.ast.GherkinDocument;
-import gherkin.pickles.Compiler;
 
 import java.io.IOException;
 
@@ -16,7 +15,7 @@ public class SpecflowGenerateCode extends AnAction {
     private ISpecflowAnalizer lexer;
 
     public SpecflowGenerateCode(){
-        this(new SpecflowAnalizer(new Compiler(), new Parser<GherkinDocument>(new AstBuilder())));
+        this(new SpecflowAnalizer(new Parser<GherkinDocument>(new AstBuilder())));
     }
 
     public SpecflowGenerateCode(ISpecflowAnalizer lexer){
