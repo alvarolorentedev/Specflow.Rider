@@ -12,7 +12,7 @@ import static org.mockito.Mockito.*;
 public class SpecflowGenerateCodeTest {
 
     @Test
-    public void actionAnalizesFile() throws IOException {
+    public void actionAnalyzesFile() throws IOException {
 
         AnActionEvent action = mock(AnActionEvent.class);
         ISpecflowAnalizer lexer = mock(ISpecflowAnalizer.class);
@@ -29,7 +29,7 @@ public class SpecflowGenerateCodeTest {
     }
 
     @Test
-    public void actionFileReadFailDoesNotBubleExceptio() throws IOException {
+    public void actionFileReadFailDoesNotBubbleExcepted() throws IOException {
 
         AnActionEvent action = mock(AnActionEvent.class);
         ISpecflowAnalizer lexer = mock(ISpecflowAnalizer.class);
@@ -39,8 +39,8 @@ public class SpecflowGenerateCodeTest {
         when(action.getData(PlatformDataKeys.VIRTUAL_FILE)).thenReturn(file);
         when(file.contentsToByteArray()).thenThrow(new IOException());
 
-        SpecflowGenerateCode genrator = new SpecflowGenerateCode(lexer);
-        genrator.actionPerformed(action);
+        SpecflowGenerateCode generator = new SpecflowGenerateCode(lexer);
+        generator.actionPerformed(action);
 
         verify(lexer, never()).analize(fileContent);
     }
