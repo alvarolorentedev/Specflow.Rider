@@ -1,6 +1,9 @@
 package kanekotic.specflow.rider;
 
 import gherkin.ast.Feature;
+import gherkin.ast.ScenarioDefinition;
+
+import java.util.List;
 
 public class SpecflowTranslatorCSharp implements ISpecflowTranslator {
 
@@ -36,7 +39,7 @@ public class SpecflowTranslatorCSharp implements ISpecflowTranslator {
             "}");
 
     @Override
-    public SpecflowFileContents translate(Feature content, SpecflowFileContents scenarionContent, ITestFrameworkConstants constants) {
+    public SpecflowFileContents translate(Feature content, SpecflowFileContents scenarios, ITestFrameworkConstants constants) {
         String resultContent = String.format(BodyContent,
                 constants.getExpectedClassAttributes(content.getName()),
                 content.getName().replaceAll("[^A-Za-z0-9]", ""),
@@ -46,7 +49,12 @@ public class SpecflowTranslatorCSharp implements ISpecflowTranslator {
                 constants.getTestFixtureTearDownHeader(),
                 constants.getTestScenarioSetupHeader(),
                 constants.getTestScenarioTearDownHeader(),
-                scenarionContent.feature);
+                scenarios.feature);
         return new SpecflowFileContents(resultContent, "");
+    }
+
+    @Override
+    public SpecflowFileContents translate(List<ScenarioDefinition> content, ITestFrameworkConstants constants) {
+        return new SpecflowFileContents();
     }
 }

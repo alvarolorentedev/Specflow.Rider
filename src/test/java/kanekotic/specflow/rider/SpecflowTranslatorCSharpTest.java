@@ -1,12 +1,13 @@
 package kanekotic.specflow.rider;
 
 import gherkin.ast.Feature;
+import gherkin.ast.ScenarioDefinition;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -79,6 +80,18 @@ public class SpecflowTranslatorCSharpTest
                 constants.getTestScenarioTearDownHeader(),
                 scenarionContent.feature);
         assertEquals(ExpectedFeatureContent, contents.feature);
+        assertEquals("", contents.steps);
+    }
+
+    @Test
+    public void translateScenariosTest(){
+        List<ScenarioDefinition> scenarios = (List<ScenarioDefinition>) mock(List.class);;
+        ITestFrameworkConstants constants = mock(ITestFrameworkConstants.class);
+
+        SpecflowTranslatorCSharp translator = new SpecflowTranslatorCSharp();
+        SpecflowFileContents contents = translator.translate(scenarios, constants);
+
+        assertEquals("", contents.feature);
         assertEquals("", contents.steps);
     }
 
