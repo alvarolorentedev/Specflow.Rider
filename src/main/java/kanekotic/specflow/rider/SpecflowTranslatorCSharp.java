@@ -38,6 +38,17 @@ public class SpecflowTranslatorCSharp implements ISpecflowTranslator {
             "%9$s",
             "}");
 
+    public static final String ScenarioBody = String.join(
+            System.getProperty("line.separator"),
+            "%1$s",//headers
+            "public virtual void %2$s()",//name(space & special chars removed)
+            "}",
+            "TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo(\"%3$s\", new string[] {%4$s});",//name, comma separate and \" tags
+            "this.ScenarioSetup(scenarioInfo);",
+            "%5$s",//testRunner.Given(""),testRunner.And(""),testRunner.When(""),testRunner.Then(""),
+            "testRunner.CollectScenarioErrors();",
+            "}");
+
     @Override
     public SpecflowFileContents translate(Feature content, SpecflowFileContents scenarios, ITestFrameworkConstants constants) {
         String resultContent = String.format(BodyContent,
@@ -55,6 +66,6 @@ public class SpecflowTranslatorCSharp implements ISpecflowTranslator {
 
     @Override
     public SpecflowFileContents translate(List<ScenarioDefinition> content, ITestFrameworkConstants constants) {
-        return new SpecflowFileContents();
+        return new SpecflowFileContents(ScenarioBody, "");
     }
 }

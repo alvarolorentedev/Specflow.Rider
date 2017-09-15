@@ -4,6 +4,7 @@ import gherkin.ast.Feature;
 import gherkin.ast.ScenarioDefinition;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,12 +47,24 @@ public class SpecflowTranslatorCSharpTest
             "%9$s",
             "}");
 
+    public static final String ScenarioBody = String.join(
+            System.getProperty("line.separator"),
+            "%1$s",//headers
+            "public virtual void %2$s()",//name(space & special chars removed)
+            "}",
+            "TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo(\"%3$s\", new string[] {%4$s});",//name, comma separate and \" tags
+            "this.ScenarioSetup(scenarioInfo);",
+            "%5$s",//testRunner.Given(""),testRunner.And(""),testRunner.When(""),testRunner.Then(""),
+            "testRunner.CollectScenarioErrors();",
+            "}");
+
     private String getRandomString(){
         return UUID.randomUUID().toString();
     }
 
     @Test
     public void translateFeatureTest() {
+
         SpecflowTranslatorCSharp translator = new SpecflowTranslatorCSharp();
 
         Feature feature = mock(Feature.class);
@@ -85,13 +98,18 @@ public class SpecflowTranslatorCSharpTest
 
     @Test
     public void translateScenariosTest(){
-        List<ScenarioDefinition> scenarios = (List<ScenarioDefinition>) mock(List.class);;
+        ScenarioDefinition scenario = mock(ScenarioDefinition.class);
+        List<ScenarioDefinition> scenarios = new ArrayList<>();
+        {
+            scenarios.add(scenario);
+        }
+
         ITestFrameworkConstants constants = mock(ITestFrameworkConstants.class);
 
         SpecflowTranslatorCSharp translator = new SpecflowTranslatorCSharp();
         SpecflowFileContents contents = translator.translate(scenarios, constants);
 
-        assertEquals("", contents.feature);
+        assertEquals(ScenarioBody, contents.feature);
         assertEquals("", contents.steps);
     }
 
