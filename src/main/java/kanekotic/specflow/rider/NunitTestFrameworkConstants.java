@@ -24,6 +24,9 @@ public class NunitTestFrameworkConstants implements ITestFrameworkConstants {
         return TestScenarioTearDownHeader;
     }
 
+    @Override
+    public String getTestScenarioMethodHeader(String name) { return  String.format(TestScenarioMethodHeader,name); }
+
     public static final String ExpectedClassAttributes = String.join(
             System.getProperty("line.separator"),
             "[NUnit.Framework.TestFixtureAttribute()]",
@@ -44,5 +47,11 @@ public class NunitTestFrameworkConstants implements ITestFrameworkConstants {
             System.getProperty("line.separator"),
             "[NUnit.Framework.TearDownAttribute()]",
             "public virtual void ScenarioTearDown()"
+    );
+
+    public static final String TestScenarioMethodHeader = String.join(
+            System.getProperty("line.separator"),
+            "[NUnit.Framework.TestAttribute()]",
+            "[NUnit.Framework.DescriptionAttribute(\"%1$s\")]"
     );
 }

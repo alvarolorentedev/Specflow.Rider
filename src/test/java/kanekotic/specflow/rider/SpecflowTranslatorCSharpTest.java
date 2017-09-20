@@ -2,6 +2,7 @@ package kanekotic.specflow.rider;
 
 import gherkin.ast.Feature;
 import gherkin.ast.ScenarioDefinition;
+import gherkin.ast.Step;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -58,6 +59,11 @@ public class SpecflowTranslatorCSharpTest
             "testRunner.CollectScenarioErrors();",
             "}");
 
+    public static final String StepBody = String.join(
+            System.getProperty("line.separator"),
+            "testRunner.%1$s(\"%$2s\")"
+    );
+
     private String getRandomString(){
         return UUID.randomUUID().toString();
     }
@@ -98,18 +104,56 @@ public class SpecflowTranslatorCSharpTest
 
     @Test
     public void translateScenariosTest(){
+
+        ITestFrameworkConstants constants = mock(ITestFrameworkConstants.class);
         ScenarioDefinition scenario = mock(ScenarioDefinition.class);
+        when(scenario.getName()).thenReturn(getRandomString().replace('-', ' ') + "("+getRandomString()+"<>!)");
+        when(scenario.getDescription()).thenReturn(getRandomString().replace('-', ' ') + "("+getRandomString()+"<>!)");
         List<ScenarioDefinition> scenarios = new ArrayList<>();
         {
             scenarios.add(scenario);
         }
 
-        ITestFrameworkConstants constants = mock(ITestFrameworkConstants.class);
+        Step given = mock(Step.class);
+        Step when = mock(Step.class);
+        Step and = mock(Step.class);
+        Step then = mock(Step.class);
+
+        when(given.getKeyword()).thenReturn("Given");
+        when(given.getText()).thenReturn("something doing something like" + getRandomString());
+        when(when.getKeyword()).thenReturn("When");
+        when(when.getText()).thenReturn("that something happen with" + getRandomString());
+        when(and.getKeyword()).thenReturn("And");
+        when(and.getText()).thenReturn("something else happen with" + getRandomString());
+        when(then.getKeyword()).thenReturn("Then");
+        when(then.getText()).thenReturn("the result is something like"+ getRandomString());
+        when(constants.getTestScenarioMethodHeader(scenario.getName())).thenReturn(getRandomString());
+
+        List<Step> steps = new ArrayList<>();
+        {
+            steps.add(given);
+            steps.add(when);
+            steps.add(and);
+            steps.add(then);
+        }
+
+        String expectedResult = String.format(ScenarioBody,
+                constants.getTestScenarioMethodHeader(scenario.getName()),
+                scenario.getName().replaceAll("[^A-Za-z0-9]", ""),
+                scenario.getName(),
+                "",//tags
+                ""//steps
+                );
+
+        when(scenario.getSteps()).thenReturn(steps);
+
 
         SpecflowTranslatorCSharp translator = new SpecflowTranslatorCSharp();
+
         SpecflowFileContents contents = translator.translate(scenarios, constants);
 
-        assertEquals(ScenarioBody, contents.feature);
+
+        assertEquals(expectedResult, contents.feature);
         assertEquals("", contents.steps);
     }
 

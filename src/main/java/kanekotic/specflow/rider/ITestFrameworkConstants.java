@@ -10,4 +10,6 @@ public interface ITestFrameworkConstants {
     String getTestScenarioSetupHeader();
 
     String getTestScenarioTearDownHeader();
+
+    String getTestScenarioMethodHeader(String name);
 }

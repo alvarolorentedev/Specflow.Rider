@@ -65,7 +65,14 @@ public class SpecflowTranslatorCSharp implements ISpecflowTranslator {
     }
 
     @Override
-    public SpecflowFileContents translate(List<ScenarioDefinition> content, ITestFrameworkConstants constants) {
-        return new SpecflowFileContents(ScenarioBody, "");
+    public SpecflowFileContents translate(List<ScenarioDefinition> scenarios, ITestFrameworkConstants constants) {
+        String resultContent = String.format(ScenarioBody,
+                constants.getTestScenarioMethodHeader(scenarios.get(0).getName()),
+                scenarios.get(0).getName().replaceAll("[^A-Za-z0-9]", ""),
+                scenarios.get(0).getName(),
+                "",//tags
+                ""//steps
+        );
+        return new SpecflowFileContents(resultContent, "");
     }
 }

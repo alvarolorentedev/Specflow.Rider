@@ -29,6 +29,13 @@ public class NunitTestFrameworkConstantsTest {
             "public virtual void ScenarioTearDown()"
     );
 
+
+    public static final String nunitTestScenarioMethodHeader = String.join(
+            System.getProperty("line.separator"),
+            "[NUnit.Framework.TestAttribute()]",
+            "[NUnit.Framework.DescriptionAttribute(\"%1$s\")]"
+    );
+
     private String getRandomString(){
         return UUID.randomUUID().toString();
     }
@@ -64,6 +71,13 @@ public class NunitTestFrameworkConstantsTest {
     public void getTestScenrioTearDownHeaderTest() {
         NunitTestFrameworkConstants constants = new NunitTestFrameworkConstants();
         assertEquals(nunitTestScenarioTearDownHeader,constants.getTestScenarioTearDownHeader());
+    }
+
+    @Test
+    public void getTestScenarioMethodHeaderTest() {
+        NunitTestFrameworkConstants constants = new NunitTestFrameworkConstants();
+        String id = getRandomString();
+        assertEquals(String.format(nunitTestScenarioMethodHeader, id),constants.getTestScenarioMethodHeader(id));
     }
 
 }
