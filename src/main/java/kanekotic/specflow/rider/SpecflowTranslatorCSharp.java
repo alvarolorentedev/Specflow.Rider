@@ -4,6 +4,7 @@ import gherkin.ast.Feature;
 import gherkin.ast.ScenarioDefinition;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SpecflowTranslatorCSharp implements ISpecflowTranslator {
 
@@ -49,6 +50,8 @@ public class SpecflowTranslatorCSharp implements ISpecflowTranslator {
             "testRunner.CollectScenarioErrors();",
             "}");
 
+    public static final String StepBody = "testRunner.%1$s(%2$s)";
+
     @Override
     public SpecflowFileContents translate(Feature content, SpecflowFileContents scenarios, ITestFrameworkConstants constants) {
         String resultContent = String.format(BodyContent,
@@ -66,12 +69,16 @@ public class SpecflowTranslatorCSharp implements ISpecflowTranslator {
 
     @Override
     public SpecflowFileContents translate(List<ScenarioDefinition> scenarios, ITestFrameworkConstants constants) {
+        String steps = scenarios.get(0).getSteps().stream()
+                .map( step -> String.format(StepBody, step.getKeyword(), step.getText()) )
+                .collect( Collectors.joining( System.getProperty("line.separator")) );
+
         String resultContent = String.format(ScenarioBody,
                 constants.getTestScenarioMethodHeader(scenarios.get(0).getName()),
                 scenarios.get(0).getName().replaceAll("[^A-Za-z0-9]", ""),
                 scenarios.get(0).getName(),
                 "",//tags
-                ""//steps
+                steps
         );
         return new SpecflowFileContents(resultContent, "");
     }

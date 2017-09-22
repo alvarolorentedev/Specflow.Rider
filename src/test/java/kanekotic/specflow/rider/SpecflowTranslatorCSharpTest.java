@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -59,10 +60,7 @@ public class SpecflowTranslatorCSharpTest
             "testRunner.CollectScenarioErrors();",
             "}");
 
-    public static final String StepBody = String.join(
-            System.getProperty("line.separator"),
-            "testRunner.%1$s(\"%$2s\")"
-    );
+    public static final String StepBody = "testRunner.%1$s(%2$s)";
 
     private String getRandomString(){
         return UUID.randomUUID().toString();
@@ -128,7 +126,6 @@ public class SpecflowTranslatorCSharpTest
         when(then.getKeyword()).thenReturn("Then");
         when(then.getText()).thenReturn("the result is something like"+ getRandomString());
         when(constants.getTestScenarioMethodHeader(scenario.getName())).thenReturn(getRandomString());
-
         List<Step> steps = new ArrayList<>();
         {
             steps.add(given);
@@ -136,13 +133,16 @@ public class SpecflowTranslatorCSharpTest
             steps.add(and);
             steps.add(then);
         }
+        String stepsString = steps.stream()
+                .map( step -> String.format(StepBody, step.getKeyword(), step.getText()) )
+                .collect( Collectors.joining( System.getProperty("line.separator")) );
 
         String expectedResult = String.format(ScenarioBody,
                 constants.getTestScenarioMethodHeader(scenario.getName()),
                 scenario.getName().replaceAll("[^A-Za-z0-9]", ""),
                 scenario.getName(),
                 "",//tags
-                ""//steps
+                stepsString
                 );
 
         when(scenario.getSteps()).thenReturn(steps);
