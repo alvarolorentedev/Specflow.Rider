@@ -1,12 +1,11 @@
 package kanekotic.specflow.rider;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.vfs.VirtualFile;
-import gherkin.AstBuilder;
-import gherkin.Parser;
-import gherkin.ast.GherkinDocument;
 
 import java.io.IOException;
 
@@ -15,12 +14,9 @@ public class SpecflowGenerateCode extends AnAction {
     private ISpecflowAnalyzer lexer;
 
     public SpecflowGenerateCode(){
-        this(new SpecflowAnalyzer(new Parser<GherkinDocument>(new AstBuilder())));
-    }
-
-    public SpecflowGenerateCode(ISpecflowAnalyzer lexer){
         super();
-        this.lexer = lexer;
+        Injector injector = Guice.createInjector(new SpecflowModule());
+        this.lexer = injector.getInstance(ISpecflowAnalyzer.class);
     }
 
     @Override
