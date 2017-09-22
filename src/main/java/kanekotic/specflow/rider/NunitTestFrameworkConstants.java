@@ -27,29 +27,29 @@ public class NunitTestFrameworkConstants implements ITestFrameworkConstants {
     @Override
     public String getTestScenarioMethodHeader(String name) { return  String.format(TestScenarioMethodHeader,name); }
 
-    public static final String ExpectedClassAttributes = String.join(
+    private static final String ExpectedClassAttributes = String.join(
             System.getProperty("line.separator"),
             "[NUnit.Framework.TestFixtureAttribute()]",
             "[NUnit.Framework.DescriptionAttribute(\"%1$s\")]"
     );
-    public static final String  TestFixtureSetupHeader = String.join(
+    private static final String  TestFixtureSetupHeader = String.join(
             System.getProperty("line.separator"),
             "[NUnit.Framework.TestFixtureSetUpAttribute()]",
             "public virtual void FeatureSetup()"
     );
-    public static final String  TestFixtureTearDownHeader = String.join(
+    private static final String  TestFixtureTearDownHeader = String.join(
             System.getProperty("line.separator"),
             "[NUnit.Framework.TestFixtureTearDownAttribute()]",
             "public virtual void FeatureTearDown()"
     );
-    public static final String TestScenarioSetupHeader = "public virtual void ScenarioSetup(TechTalk.SpecFlow.ScenarioInfo scenarioInfo)";
-    public static final String TestScenarioTearDownHeader = String.join(
+    private static final String TestScenarioSetupHeader = "public virtual void ScenarioSetup(TechTalk.SpecFlow.ScenarioInfo scenarioInfo)";
+    private static final String TestScenarioTearDownHeader = String.join(
             System.getProperty("line.separator"),
             "[NUnit.Framework.TearDownAttribute()]",
             "public virtual void ScenarioTearDown()"
     );
 
-    public static final String TestScenarioMethodHeader = String.join(
+    private static final String TestScenarioMethodHeader = String.join(
             System.getProperty("line.separator"),
             "[NUnit.Framework.TestAttribute()]",
             "[NUnit.Framework.DescriptionAttribute(\"%1$s\")]"

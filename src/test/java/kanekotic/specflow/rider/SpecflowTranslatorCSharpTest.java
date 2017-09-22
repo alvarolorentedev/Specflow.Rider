@@ -110,6 +110,7 @@ public class SpecflowTranslatorCSharpTest
         List<ScenarioDefinition> scenarios = new ArrayList<>();
         {
             scenarios.add(scenario);
+            scenarios.add(scenario);
         }
 
         Step given = mock(Step.class);
@@ -133,27 +134,27 @@ public class SpecflowTranslatorCSharpTest
             steps.add(and);
             steps.add(then);
         }
-        String stepsString = steps.stream()
-                .map( step -> String.format(StepBody, step.getKeyword(), step.getText()) )
-                .collect( Collectors.joining( System.getProperty("line.separator")) );
-
-        String expectedResult = String.format(ScenarioBody,
-                constants.getTestScenarioMethodHeader(scenario.getName()),
-                scenario.getName().replaceAll("[^A-Za-z0-9]", ""),
-                scenario.getName(),
-                "",//tags
-                stepsString
-                );
-
         when(scenario.getSteps()).thenReturn(steps);
 
+        String scenariosString = scenarios.stream()
+                .map( scene -> {
+                    String stepsString = scene.getSteps().stream()
+                            .map( step -> String.format(StepBody, step.getKeyword(), step.getText()) )
+                            .collect( Collectors.joining( System.getProperty("line.separator")) );
+                    return String.format(ScenarioBody,
+                        constants.getTestScenarioMethodHeader(scene.getName()),
+                        scene.getName().replaceAll("[^A-Za-z0-9]", ""),
+                        scene.getName(),
+                        "",//tags
+                        stepsString);
+                })
+                .collect( Collectors.joining( System.getProperty("line.separator")) );
 
         SpecflowTranslatorCSharp translator = new SpecflowTranslatorCSharp();
 
         SpecflowFileContents contents = translator.translate(scenarios, constants);
 
-
-        assertEquals(expectedResult, contents.feature);
+        assertEquals(scenariosString, contents.feature);
         assertEquals("", contents.steps);
     }
 

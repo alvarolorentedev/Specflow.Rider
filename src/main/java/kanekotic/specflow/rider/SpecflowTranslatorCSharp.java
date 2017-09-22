@@ -69,17 +69,20 @@ public class SpecflowTranslatorCSharp implements ISpecflowTranslator {
 
     @Override
     public SpecflowFileContents translate(List<ScenarioDefinition> scenarios, ITestFrameworkConstants constants) {
-        String steps = scenarios.get(0).getSteps().stream()
-                .map( step -> String.format(StepBody, step.getKeyword(), step.getText()) )
+        String featureContent = scenarios.stream()
+                .map( scenario -> {
+                    String stepsString = scenario.getSteps().stream()
+                            .map( step -> String.format(StepBody, step.getKeyword(), step.getText()) )
+                            .collect( Collectors.joining( System.getProperty("line.separator")) );
+                    return String.format(ScenarioBody,
+                            constants.getTestScenarioMethodHeader(scenario.getName()),
+                            scenario.getName().replaceAll("[^A-Za-z0-9]", ""),
+                            scenario.getName(),
+                            "",//tags
+                            stepsString);
+                })
                 .collect( Collectors.joining( System.getProperty("line.separator")) );
 
-        String resultContent = String.format(ScenarioBody,
-                constants.getTestScenarioMethodHeader(scenarios.get(0).getName()),
-                scenarios.get(0).getName().replaceAll("[^A-Za-z0-9]", ""),
-                scenarios.get(0).getName(),
-                "",//tags
-                steps
-        );
-        return new SpecflowFileContents(resultContent, "");
+        return new SpecflowFileContents(featureContent, "");
     }
 }
