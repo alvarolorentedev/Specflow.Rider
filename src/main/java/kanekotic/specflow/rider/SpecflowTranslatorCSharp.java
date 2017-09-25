@@ -2,7 +2,10 @@ package kanekotic.specflow.rider;
 
 import gherkin.ast.Feature;
 import gherkin.ast.ScenarioDefinition;
+import gherkin.ast.Step;
+import gherkin.ast.Tag;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,22 +42,38 @@ public class SpecflowTranslatorCSharp implements ISpecflowTranslator {
             "%9$s",
             "}");
 
+    public static final String StepsFeatureBody = String.join(
+            System.getProperty("line.separator"),
+            "[Binding]",
+            "public class %1$s",
+            "{",
+            "%2$s",
+            "}");
+
     public static final String ScenarioBody = String.join(
             System.getProperty("line.separator"),
-            "%1$s",//headers
-            "public virtual void %2$s()",//name(space & special chars removed)
+            "%1$s",
+            "public virtual void %2$s()",
             "}",
-            "TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo(\"%3$s\", new string[] {%4$s});",//name, comma separate and \" tags
+            "TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo(\"%3$s\", new string[] {%4$s});",
             "this.ScenarioSetup(scenarioInfo);",
-            "%5$s",//testRunner.Given(""),testRunner.And(""),testRunner.When(""),testRunner.Then(""),
+            "%5$s",
             "testRunner.CollectScenarioErrors();",
             "}");
 
     public static final String StepBody = "testRunner.%1$s(%2$s)";
 
+    public static final String StepsStepsBody = String.join(
+            System.getProperty("line.separator"),
+            "[%1$s(@\"%2$s\")]",
+            "public void %3$s",
+            "{",
+            "throw new NotImplementedException();",
+            "}");
+
     @Override
     public SpecflowFileContents translate(Feature content, SpecflowFileContents scenarios, ITestFrameworkConstants constants) {
-        String resultContent = String.format(BodyContent,
+        String featureContent = String.format(BodyContent,
                 constants.getExpectedClassAttributes(content.getName()),
                 content.getName().replaceAll("[^A-Za-z0-9]", ""),
                 constants.getTestFixtureSetupHeader(),
@@ -64,25 +83,42 @@ public class SpecflowTranslatorCSharp implements ISpecflowTranslator {
                 constants.getTestScenarioSetupHeader(),
                 constants.getTestScenarioTearDownHeader(),
                 scenarios.feature);
-        return new SpecflowFileContents(resultContent, "");
+        String stepsContent = String.format(StepsFeatureBody,
+                content.getName().replaceAll("[^A-Za-z0-9]", ""),
+                scenarios.steps);
+        return new SpecflowFileContents(featureContent,stepsContent);
     }
 
     @Override
-    public SpecflowFileContents translate(List<ScenarioDefinition> scenarios, ITestFrameworkConstants constants) {
+    public SpecflowFileContents translate(List<ScenarioDefinition> scenarios, List<Tag> tags, ITestFrameworkConstants constants) {
         String featureContent = scenarios.stream()
                 .map( scenario -> {
                     String stepsString = scenario.getSteps().stream()
                             .map( step -> String.format(StepBody, step.getKeyword(), step.getText()) )
                             .collect( Collectors.joining( System.getProperty("line.separator")) );
+                    String tagsString = tags.stream()
+                            .map(tg -> String.format("\"%1$s\"", tg.getName()))
+                            .collect(Collectors.joining(","));
                     return String.format(ScenarioBody,
                             constants.getTestScenarioMethodHeader(scenario.getName()),
                             scenario.getName().replaceAll("[^A-Za-z0-9]", ""),
                             scenario.getName(),
-                            "",//tags
+                            tagsString,
                             stepsString);
                 })
                 .collect( Collectors.joining( System.getProperty("line.separator")) );
+        List<Step> stepsDone= new ArrayList<>();
+        String stepString = scenarios.stream()
+                .map(ScenarioDefinition::getSteps)
+                .flatMap(List::stream)
+                .filter(step -> !stepsDone.stream().anyMatch(stepDone -> step.getText() == stepDone.getText() && step.getKeyword() == stepDone.getKeyword()))
+                .peek(step -> stepsDone.add(step))
+                .map(step -> String.format(StepsStepsBody,
+                        step.getKeyword(),
+                        step.getText(),
+                        step.getText().replaceAll("[^A-Za-z0-9]", "")))
+                .collect( Collectors.joining( System.getProperty("line.separator")) );
 
-        return new SpecflowFileContents(featureContent, "");
+        return new SpecflowFileContents(featureContent, stepString);
     }
 }

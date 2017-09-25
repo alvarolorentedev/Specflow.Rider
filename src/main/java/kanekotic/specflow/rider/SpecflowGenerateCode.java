@@ -19,6 +19,11 @@ public class SpecflowGenerateCode extends AnAction {
         this.lexer = injector.getInstance(ISpecflowAnalyzer.class);
     }
 
+    public SpecflowGenerateCode(ISpecflowAnalyzer lexer){
+        super();
+        this.lexer = lexer;
+    }
+
     @Override
     public void actionPerformed(AnActionEvent e) {
         VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
