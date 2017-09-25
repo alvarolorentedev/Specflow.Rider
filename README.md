@@ -13,6 +13,15 @@ gradle compile  # generate the code
 gradle check    # gnerate the code and test
 ```
 
+## TODO
+
+- [ ] Table Support
+- [ ] Parameters Support
+- [ ] Move to Rider style plugin
+- [ ] XUnit Support
+- [ ] MSTest Support
+- [ ] Add Files to project
+
 ### Logo
 
  Check out the new logo that I created on <a href="http://logomakr.com" title="Logo Maker">LogoMaker.com</a> https://logomakr.com/8dchdu8dchdu
