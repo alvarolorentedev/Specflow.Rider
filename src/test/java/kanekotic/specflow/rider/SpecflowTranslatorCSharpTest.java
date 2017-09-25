@@ -132,9 +132,7 @@ public class SpecflowTranslatorCSharpTest
         when(constants.getTestScenarioSetupHeader()).thenReturn(Faker.getRandomString());
         when(constants.getTestScenarioTearDownHeader()).thenReturn(Faker.getRandomString());
 
-        SpecflowFileContents scenarionContent = new SpecflowFileContents();
-        scenarionContent.feature = Faker.getRandomString();
-        scenarionContent.steps = Faker.getRandomString();
+        SpecflowFileContents scenarionContent = new SpecflowFileContents(Faker.getRandomString(), Faker.getRandomString());
 
         SpecflowFileContents contents = translator.translate(feature, scenarionContent, constants);
         String ExpectedFeatureContent = String.format(BodyContent,

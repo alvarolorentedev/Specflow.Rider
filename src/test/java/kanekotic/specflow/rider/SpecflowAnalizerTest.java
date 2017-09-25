@@ -31,8 +31,8 @@ public class SpecflowAnalizerTest {
         when(feature.getTags()).thenReturn(tags);
 
         when(gherkinDocument.getFeature()).thenReturn(feature);
-        SpecflowFileContents translatedScenarios =new SpecflowFileContents();
-        SpecflowFileContents translatedFeature =new SpecflowFileContents();
+        SpecflowFileContents translatedScenarios =new SpecflowFileContents(Faker.getRandomString(), Faker.getRandomString());
+        SpecflowFileContents translatedFeature =new SpecflowFileContents(Faker.getRandomString(), Faker.getRandomString());
         SpecflowFileContents translatedFile =new SpecflowFileContents(Faker.getRandomString(), Faker.getRandomString());
         String namespace = Faker.getRandomString();
         when(translator.translate(scenarios, tags, constants)).thenReturn(translatedScenarios);
