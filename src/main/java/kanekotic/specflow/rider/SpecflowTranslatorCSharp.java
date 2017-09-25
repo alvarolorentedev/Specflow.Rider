@@ -121,4 +121,33 @@ public class SpecflowTranslatorCSharp implements ISpecflowTranslator {
 
         return new SpecflowFileContents(featureContent, stepString);
     }
+
+
+    public static final String StepsFileBody = String.join(
+            System.getProperty("line.separator"),
+            "namespace %1$s",
+            "{",
+            "using TechTalk.SpecFlow;",
+            " %2$s",
+            "}");
+
+    public static final String FeatureFileBody = String.join(
+            System.getProperty("line.separator"),
+            "using NUnit.Framework;",
+            "using TechTalk.SpecFlow;",
+            "namespace %1$s",
+            "{",
+            " %2$s",
+            "}");
+
+    @Override
+    public SpecflowFileContents translate(String namespace, SpecflowFileContents feature, ITestFrameworkConstants constants) {
+        String featureContent = String.format(FeatureFileBody,
+                namespace,
+                feature.feature);
+        String stepsContent = String.format(StepsFileBody,
+                namespace,
+                feature.steps);
+        return new SpecflowFileContents(featureContent,stepsContent);
+    }
 }

@@ -79,8 +79,45 @@ public class SpecflowTranslatorCSharpTest
 
     public static final String StepBody = "testRunner.%1$s(%2$s)";
 
+
+
+    public static final String StepsFileBody = String.join(
+            System.getProperty("line.separator"),
+            "namespace %1$s",
+            "{",
+            "using TechTalk.SpecFlow;",
+            " %2$s",
+            "}");
+
+    public static final String FeatureFileBody = String.join(
+            System.getProperty("line.separator"),
+            "using NUnit.Framework;",
+            "using TechTalk.SpecFlow;",
+            "namespace %1$s",
+            "{",
+            " %2$s",
+            "}");
+
     private String getRandomString(){
         return UUID.randomUUID().toString();
+    }
+
+    @Test
+    public void translateFileTest() {
+        SpecflowTranslatorCSharp translator = new SpecflowTranslatorCSharp();
+
+        ITestFrameworkConstants constants = mock(ITestFrameworkConstants.class);
+        SpecflowFileContents featureContent = new SpecflowFileContents(getRandomString(), getRandomString());
+        String namespace = getRandomString();
+        String expectedFeatureContent = String.format(FeatureFileBody,
+                namespace,
+                featureContent.feature);
+        String expectedStepsContent = String.format(StepsFileBody,
+                namespace,
+                featureContent.steps);
+        SpecflowFileContents contents = translator.translate(namespace, featureContent, constants);
+        assertEquals(expectedFeatureContent, contents.feature);
+        assertEquals(expectedStepsContent, contents.steps);
     }
 
     @Test

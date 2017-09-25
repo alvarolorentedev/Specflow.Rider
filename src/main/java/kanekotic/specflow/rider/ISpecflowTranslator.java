@@ -9,5 +9,6 @@ import java.util.List;
 public interface ISpecflowTranslator {
     SpecflowFileContents translate(Feature content, SpecflowFileContents scenarios, ITestFrameworkConstants constants);
     SpecflowFileContents translate(List<ScenarioDefinition> scenarios, List<Tag> tags, ITestFrameworkConstants constants);
+    SpecflowFileContents translate(String namespace, SpecflowFileContents featureContent, ITestFrameworkConstants constants);
 }
 
