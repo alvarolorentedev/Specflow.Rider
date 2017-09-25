@@ -36,14 +36,10 @@ public class NunitTestFrameworkConstantsTest {
             "[NUnit.Framework.DescriptionAttribute(\"%1$s\")]"
     );
 
-    private String getRandomString(){
-        return UUID.randomUUID().toString();
-    }
-
     @Test
     public void getExpectedClassAtributesTest() {
         NunitTestFrameworkConstants constants = new NunitTestFrameworkConstants();
-        String id = getRandomString();
+        String id = Faker.getRandomString();
         assertEquals(String.format(nunitExpectedClassAttributes, id),constants.getExpectedClassAttributes(id));
 
     }
@@ -76,7 +72,7 @@ public class NunitTestFrameworkConstantsTest {
     @Test
     public void getTestScenarioMethodHeaderTest() {
         NunitTestFrameworkConstants constants = new NunitTestFrameworkConstants();
-        String id = getRandomString();
+        String id = Faker.getRandomString();
         assertEquals(String.format(nunitTestScenarioMethodHeader, id),constants.getTestScenarioMethodHeader(id));
     }
 

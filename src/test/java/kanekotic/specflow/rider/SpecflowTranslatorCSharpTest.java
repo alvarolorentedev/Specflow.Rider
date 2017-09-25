@@ -98,17 +98,13 @@ public class SpecflowTranslatorCSharpTest
             " %2$s",
             "}");
 
-    private String getRandomString(){
-        return UUID.randomUUID().toString();
-    }
-
     @Test
     public void translateFileTest() {
         SpecflowTranslatorCSharp translator = new SpecflowTranslatorCSharp();
 
         ITestFrameworkConstants constants = mock(ITestFrameworkConstants.class);
-        SpecflowFileContents featureContent = new SpecflowFileContents(getRandomString(), getRandomString());
-        String namespace = getRandomString();
+        SpecflowFileContents featureContent = new SpecflowFileContents(Faker.getRandomString(), Faker.getRandomString());
+        String namespace = Faker.getRandomString();
         String expectedFeatureContent = String.format(FeatureFileBody,
                 namespace,
                 featureContent.feature);
@@ -128,17 +124,17 @@ public class SpecflowTranslatorCSharpTest
         Feature feature = mock(Feature.class);
         ITestFrameworkConstants constants = mock(ITestFrameworkConstants.class);
 
-        when(feature.getName()).thenReturn(getRandomString().replace('-', ' ') + "("+getRandomString()+"<>!)");
-        when(feature.getDescription()).thenReturn(getRandomString().replace('-', ' ') + "("+getRandomString()+"<>!)");
-        when(constants.getExpectedClassAttributes(feature.getName())).thenReturn(getRandomString());
-        when(constants.getTestFixtureSetupHeader()).thenReturn(getRandomString());
-        when(constants.getTestFixtureTearDownHeader()).thenReturn(getRandomString());
-        when(constants.getTestScenarioSetupHeader()).thenReturn(getRandomString());
-        when(constants.getTestScenarioTearDownHeader()).thenReturn(getRandomString());
+        when(feature.getName()).thenReturn(Faker.getRandomString().replace('-', ' ') + "("+Faker.getRandomString()+"<>!)");
+        when(feature.getDescription()).thenReturn(Faker.getRandomString().replace('-', ' ') + "("+Faker.getRandomString()+"<>!)");
+        when(constants.getExpectedClassAttributes(feature.getName())).thenReturn(Faker.getRandomString());
+        when(constants.getTestFixtureSetupHeader()).thenReturn(Faker.getRandomString());
+        when(constants.getTestFixtureTearDownHeader()).thenReturn(Faker.getRandomString());
+        when(constants.getTestScenarioSetupHeader()).thenReturn(Faker.getRandomString());
+        when(constants.getTestScenarioTearDownHeader()).thenReturn(Faker.getRandomString());
 
         SpecflowFileContents scenarionContent = new SpecflowFileContents();
-        scenarionContent.feature = getRandomString();
-        scenarionContent.steps = getRandomString();
+        scenarionContent.feature = Faker.getRandomString();
+        scenarionContent.steps = Faker.getRandomString();
 
         SpecflowFileContents contents = translator.translate(feature, scenarionContent, constants);
         String ExpectedFeatureContent = String.format(BodyContent,
@@ -164,15 +160,15 @@ public class SpecflowTranslatorCSharpTest
 
         ITestFrameworkConstants constants = mock(ITestFrameworkConstants.class);
         ScenarioDefinition scenario = mock(ScenarioDefinition.class);
-        when(scenario.getName()).thenReturn(getRandomString().replace('-', ' ') + "("+getRandomString()+"<>!)");
-        when(scenario.getDescription()).thenReturn(getRandomString().replace('-', ' ') + "("+getRandomString()+"<>!)");
+        when(scenario.getName()).thenReturn(Faker.getRandomString().replace('-', ' ') + "("+Faker.getRandomString()+"<>!)");
+        when(scenario.getDescription()).thenReturn(Faker.getRandomString().replace('-', ' ') + "("+Faker.getRandomString()+"<>!)");
         List<ScenarioDefinition> scenarios = new ArrayList<>();
         {
             scenarios.add(scenario);
             scenarios.add(scenario);
         }
         Tag tag = mock(Tag.class);
-        when(tag.getName()).thenReturn(getRandomString());
+        when(tag.getName()).thenReturn(Faker.getRandomString());
         List<Tag> tags = new ArrayList<>();
         {
             tags.add(tag);
@@ -184,14 +180,14 @@ public class SpecflowTranslatorCSharpTest
         Step then = mock(Step.class);
 
         when(given.getKeyword()).thenReturn("Given");
-        when(given.getText()).thenReturn("something doing something like" + getRandomString());
+        when(given.getText()).thenReturn("something doing something like" + Faker.getRandomString());
         when(when.getKeyword()).thenReturn("When");
-        when(when.getText()).thenReturn("that something happen with" + getRandomString());
+        when(when.getText()).thenReturn("that something happen with" + Faker.getRandomString());
         when(and.getKeyword()).thenReturn("And");
-        when(and.getText()).thenReturn("something else happen with" + getRandomString());
+        when(and.getText()).thenReturn("something else happen with" + Faker.getRandomString());
         when(then.getKeyword()).thenReturn("Then");
-        when(then.getText()).thenReturn("the result is something like"+ getRandomString());
-        when(constants.getTestScenarioMethodHeader(scenario.getName())).thenReturn(getRandomString());
+        when(then.getText()).thenReturn("the result is something like"+ Faker.getRandomString());
+        when(constants.getTestScenarioMethodHeader(scenario.getName())).thenReturn(Faker.getRandomString());
         List<Step> steps = new ArrayList<>();
         {
             steps.add(given);
