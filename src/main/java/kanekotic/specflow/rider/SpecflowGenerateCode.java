@@ -29,7 +29,7 @@ public class SpecflowGenerateCode extends AnAction {
         VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
 
         try {
-            lexer.analyze(new String(file.contentsToByteArray()));
+            lexer.analyze(new String(file.contentsToByteArray()), "");
         } catch (IOException ioExeption) {
 
         }

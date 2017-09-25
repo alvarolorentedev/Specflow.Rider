@@ -25,7 +25,7 @@ public class SpecflowGenerateCodeTest {
         SpecflowGenerateCode genrator = new SpecflowGenerateCode(lexer);
         genrator.actionPerformed(action);
 
-        verify(lexer).analyze(fileContent);
+        verify(lexer).analyze(fileContent, "");
     }
 
     @Test
@@ -42,7 +42,7 @@ public class SpecflowGenerateCodeTest {
         SpecflowGenerateCode generator = new SpecflowGenerateCode(lexer);
         generator.actionPerformed(action);
 
-        verify(lexer, never()).analyze(fileContent);
+        verify(lexer, never()).analyze(fileContent, "");
     }
 
 }
