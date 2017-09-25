@@ -27,12 +27,12 @@ public class SpecflowGenerateCode extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
-
         try {
-            lexer.analyze(new String(file.contentsToByteArray()), "");
+            lexer.analyze(new String(file.contentsToByteArray()), e.getProject().getName());
         } catch (IOException ioExeption) {
 
         }
     }
+
 }
 

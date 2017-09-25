@@ -18,6 +18,7 @@
          on how to target different products -->
     <!-- uncomment to enable plugin in all products
     <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.rider</depends>
     -->
 
     <extensions defaultExtensionNs="com.intellij">
